@@ -1,0 +1,27 @@
+# OS and editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Editor / IDE local state (allow repo-checked settings only)
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/shelf/
+.vscode/*.log
+
+# Local tooling caches
+.cache/
+node_modules/
+.venv/
+
+# Tool runner outputs
+reports/*.local.md
+
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key

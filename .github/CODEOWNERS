@@ -1,0 +1,20 @@
+# CODEOWNERS — routes review for every path in the repo.
+# See signal 1.4 in skills/ai-ready/references/AI_READINESS_GUIDE.md.
+#
+# The owner below is the repo's single maintainer. Replace with a
+# team handle (e.g., @your-org/ai-ready-maintainers) once one exists.
+
+* @vjovanov
+
+# Rubric changes need extra scrutiny: they affect every downstream score.
+/skills/ai-ready/SKILL.md                              @vjovanov
+/skills/ai-ready/references/AI_READINESS_GUIDE.md      @vjovanov
+/skills/ai-ready/references/AGENT_REFERENCES.md        @vjovanov
+
+# Spec and ADRs
+/docs/SPECIFICATION.md  @vjovanov
+/docs/adr/              @vjovanov
+
+# CI and tooling
+/.github/   @vjovanov
+/justfile   @vjovanov

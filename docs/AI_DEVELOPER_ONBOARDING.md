@@ -7,9 +7,9 @@ agents — not just set up tools. Organized by impact; start at the top.
 
 - [QUIZ.md](QUIZ.md) — 30-question self-assessment.
 - [EXERCISES.md](EXERCISES.md) — 9 hands-on drills, easiest first.
-- [AGENT_REFERENCES.md](AGENT_REFERENCES.md) — concrete filenames,
+- [AGENT_REFERENCES.md](../skills/ai-ready/references/AGENT_REFERENCES.md) — concrete filenames,
   configs, tools per agent ecosystem.
-- [AI_READINESS_GUIDE.md](AI_READINESS_GUIDE.md) — scoring rubric used
+- [AI_READINESS_GUIDE.md](../skills/ai-ready/references/AI_READINESS_GUIDE.md) — scoring rubric used
   by `SKILL.md`.
 
 ## TL;DR — the short version

@@ -1,0 +1,6 @@
+.git/
+node_modules/
+# Skill report templates contain intentional <placeholders>;
+# don't reflow them.
+skills/ai-ready/SKILL.md
+skills/ai-ready-tickets/SKILL.md

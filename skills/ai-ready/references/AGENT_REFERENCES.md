@@ -11,9 +11,9 @@ The list below is illustrative rather than exhaustive.
 
 ## Additional reference docs
 
-- [Developer onboarding checklist](AI_DEVELOPER_ONBOARDING.md)
-- [Hands-on exercises](EXERCISES.md)
-- [Self-assessment quiz](QUIZ.md)
+- [Developer onboarding checklist](../../../docs/AI_DEVELOPER_ONBOARDING.md)
+- [Hands-on exercises](../../../docs/EXERCISES.md)
+- [Self-assessment quiz](../../../docs/QUIZ.md)
 
 ## Agent-specific quick map
 

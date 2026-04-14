@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: AI-readiness assessment
+    url: https://github.com/vjovanov/ai-ready/blob/main/skills/ai-ready/SKILL.md
+    about: Run the ai-ready skill against your repo before filing an issue against this repo's rubric.

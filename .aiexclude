@@ -1,0 +1,35 @@
+# Canonical AI-ignore file. `.claudeignore` is a symlink to this file —
+# edit only here so every agent gets the same rules.
+# See signal 1.3 in skills/ai-ready/references/AI_READINESS_GUIDE.md.
+
+# Secrets and local env
+.env
+.env.*
+!.env.example
+secrets/
+*.pem
+*.key
+
+# Build and tooling output
+dist/
+build/
+out/
+target/
+reports/*.local.md
+
+# Editor state
+.idea/workspace.xml
+.idea/tasks.xml
+
+# Vendored dependencies
+vendor/
+node_modules/
+
+# Binary assets (none in this repo today, but pre-empt)
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.woff2
+*.zip
+*.pdf

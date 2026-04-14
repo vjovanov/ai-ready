@@ -12,8 +12,13 @@ Assess the AI-readiness of a repository. If `$ARGUMENTS` is provided,
 use it as the repo path; otherwise, assess the current working
 directory.
 
+The report's `## Follow-up tickets` section is consumed by the
+[ai-ready-tickets](../ai-ready-tickets/SKILL.md) skill, which opens a
+tracking epic and one GitHub issue per follow-up item. Keep that
+section's format stable.
+
 For the human-side counterpart — how developers should *use* agents —
-see [references/AI_DEVELOPER_ONBOARDING.md](references/AI_DEVELOPER_ONBOARDING.md).
+see [AI_DEVELOPER_ONBOARDING.md](../../docs/AI_DEVELOPER_ONBOARDING.md).
 Ecosystem-specific filenames and configs live in
 [references/AGENT_REFERENCES.md](references/AGENT_REFERENCES.md).
 Scoring rubric detail lives in
@@ -79,7 +84,7 @@ ecosystem-specific filenames, see `AGENT_REFERENCES.md`.
 - [ ] [3.1](references/AI_READINESS_GUIDE.md#31-mcp-servers) MCP server configuration is present (optional — prefer shell commands and skills when they cover the same capability)
 - [ ] [3.2](references/AI_READINESS_GUIDE.md#32-custom-commands-and-skills) Custom commands, skills, or tool definitions
 - [ ] [3.3](references/AI_READINESS_GUIDE.md#33-hooks-and-guardrails) Hooks, sandbox settings, or approval policies
-- [ ] [3.4](references/AI_READINESS_GUIDE.md#34-ide-ai-config) Repo-checked workspace AI settings for standardized IDEs (TODO Agnts)
+- [ ] [3.4](references/AI_READINESS_GUIDE.md#34-ide-ai-config) Repo-checked workspace AI settings for standardized IDEs (e.g., `.vscode/settings.json`, `.idea/`, `.claude/settings.json`, `opencode.json`, `.codex/config.toml`)
 
 ### 4. DevOps and workflow integration
 - [ ] [4.1](references/AI_READINESS_GUIDE.md#41-pull--merge-request-automation) PRs/MRs: can the agent create, update, and comment on pull/merge requests?
