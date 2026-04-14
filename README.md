@@ -1,4 +1,4 @@
-# AI Ready
+# AI Ready?
 
 > Make any repository legible and productive for AI coding agents.
 
@@ -50,6 +50,24 @@ Re-runs are idempotent.
 
 Work the tickets, re-run `/ai-ready`, watch the number move. The
 rubric is the goal; the ticket list is the path.
+
+---
+
+## For developers
+
+The rubric grades repos; developers still have to work with agents
+well. A three-step track:
+
+1. **Read** [docs/AI_DEVELOPER_ONBOARDING.md](docs/AI_DEVELOPER_ONBOARDING.md)
+   — the checklist of habits that separate "I tried an agent once"
+   from "agents ship most of my code."
+2. **Self-assess** with [docs/QUIZ.md](docs/QUIZ.md) — 30 questions;
+   anything you can't answer points to a section of the onboarding
+   doc.
+3. **Drill** with [docs/EXERCISES.md](docs/EXERCISES.md) — nine
+   hands-on exercises, easiest first. Start with Exercise 1 (automate
+   a daily task) and Exercise 3 (hand a PR review cycle to the agent);
+   both pay off immediately.
 
 ---
 
