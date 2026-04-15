@@ -18,13 +18,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: extractions/setup-just@v2
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
       - name: markdownlint
-        run: npx --yes markdownlint-cli2 "**/*.md" "#node_modules" "#.git"
+        run: just lint
       - name: prettier --check
-        run: npx --yes prettier --check "**/*.md"
+        run: just format-check
 
   links:
     runs-on: ubuntu-latest
@@ -39,6 +40,10 @@ jobs:
             --offline
             --exclude-path node_modules
             --exclude-path .git
+            --exclude-path .agents
+            --exclude-path .claude
+            --exclude-path .codex
+            --exclude-path .pi
             '**/*.md'
           fail: true
 

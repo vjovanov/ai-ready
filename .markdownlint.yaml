@@ -18,6 +18,10 @@ MD033:
     - img
     - a
     - kbd
+    - title
+    - body
+    - t
+    - p
 
 # MD024: duplicate headings allowed if in different sections.
 MD024:

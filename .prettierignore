@@ -1,4 +1,8 @@
 .git/
+.agents/
+.claude/
+.codex/
+.pi/
 node_modules/
 # Skill report templates contain intentional <placeholders>;
 # don't reflow them.

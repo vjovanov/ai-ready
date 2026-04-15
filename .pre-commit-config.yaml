@@ -1,0 +1,18 @@
+repos:
+  - repo: local
+    hooks:
+      - id: just-lint
+        name: just lint
+        entry: just lint
+        language: system
+        pass_filenames: false
+      - id: just-format-check
+        name: just format-check
+        entry: just format-check
+        language: system
+        pass_filenames: false
+      - id: just-anchors
+        name: just anchors
+        entry: just anchors
+        language: system
+        pass_filenames: false
