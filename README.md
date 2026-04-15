@@ -13,15 +13,20 @@ hand-holding, this tells you why — and what to do next.
 
 ```mermaid
 flowchart LR
-    A["🎯 Point your agent<br/>at your repo"] --> B["📋 /ai-ready<br/>score + report"]
-    B --> C["🎟️ /ai-ready-tickets<br/>epic + sub-issues"]
+    A(["🎯 Point your agent<br/>at your repo"]) --> B["📋 <b>/ai-ready</b><br/>score + report"]
+    B --> C["🎟️ <b>/ai-ready-tickets</b><br/>epic + sub-issues"]
     C --> D["🔧 Fix flagged<br/>issues"]
-    D -.re-score.-> B
+    D -. re-score .-> B
 
-    style A fill:#e8f1ff,stroke:#2d6cdf,stroke-width:2px
-    style B fill:#fff6d5,stroke:#d99e00,stroke-width:2px
-    style C fill:#fde8f4,stroke:#c0438b,stroke-width:2px
-    style D fill:#e9ffe8,stroke:#2da02d,stroke-width:2px
+    classDef start fill:#e8f1ff,stroke:#2d6cdf,stroke-width:2px,color:#0a1f3d,rx:12,ry:12
+    classDef score fill:#fff6d5,stroke:#d99e00,stroke-width:2px,color:#3d2e00,rx:8,ry:8
+    classDef tickets fill:#fde8f4,stroke:#c0438b,stroke-width:2px,color:#3d0a28,rx:8,ry:8
+    classDef fix fill:#e9ffe8,stroke:#2da02d,stroke-width:2px,color:#0a3d0a,rx:8,ry:8
+
+    class A start
+    class B score
+    class C tickets
+    class D fix
 ```
 
 Run the skills from any compatible agent (Claude Code, Codex,
@@ -61,6 +66,24 @@ rubric is the goal; the ticket list is the path.
 
 The rubric grades repos; developers still have to work with agents
 well. A three-step track:
+
+```mermaid
+flowchart LR
+    A["📖 Read<br/>onboarding"] --> B["📝 Self-assess<br/>with quiz"]
+    B --> C["🏋️ Drill<br/>exercises"]
+    C --> D(["🚀 Daily<br/>practice"])
+    D -. gaps surface .-> A
+
+    classDef read fill:#e8f1ff,stroke:#2d6cdf,stroke-width:2px,color:#0a1f3d,rx:8,ry:8
+    classDef quiz fill:#fff6d5,stroke:#d99e00,stroke-width:2px,color:#3d2e00,rx:8,ry:8
+    classDef drill fill:#fde8f4,stroke:#c0438b,stroke-width:2px,color:#3d0a28,rx:8,ry:8
+    classDef ship fill:#e9ffe8,stroke:#2da02d,stroke-width:2px,color:#0a3d0a,rx:12,ry:12
+
+    class A read
+    class B quiz
+    class C drill
+    class D ship
+```
 
 1. **Read** [docs/AI_DEVELOPER_ONBOARDING.md](docs/AI_DEVELOPER_ONBOARDING.md)
    — the checklist of habits that separate "I tried an agent once"
