@@ -135,6 +135,4 @@ Each category scores 0–3. Total is `round(sum / 27 × 100)`.
 
 PRs welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md).
 
-## License
-
-TBD.
+## License [MIT](LICENSE)
