@@ -1,9 +1,9 @@
 ---
 name: ai-ready-tickets
-description: Turn an AI-readiness report into GitHub issues — one epic summarizing the score and verdict, plus one sub-ticket per follow-up item. Idempotent: re-running updates the epic rather than creating duplicates.
+description: "Turn an AI-readiness report into GitHub issues — one epic summarizing the score and verdict, plus one sub-ticket per follow-up item. Idempotent: re-running updates the epic rather than creating duplicates."
 user-invocable: true
 allowed-tools: Bash Read Grep Glob
-argument-hint: [report-path] [--repo owner/repo] [--dry-run]
+argument-hint: "[report-path] [--repo owner/repo] [--dry-run]"
 context: fork
 ---
 
@@ -34,6 +34,9 @@ Run these checks first and stop with an actionable error if any fail:
 2. `gh repo view --json nameWithOwner` — resolves target repo (unless
    `--repo` was passed).
 3. Report file exists and contains a `## Follow-up tickets` heading.
+4. The authenticated user can create issue dependencies in the target
+   repo. Use `gh api repos/<owner>/<repo>` or another lightweight read
+   check to confirm the repo is reachable before attempting writes.
 
 ## Parsing the report
 
@@ -47,7 +50,7 @@ Extract these sections from the report:
 - **Follow-up tickets** — bullet list under `## Follow-up tickets`.
   Each line follows:
 
-  ```
+  ```text
   - `[type:<feature|task|bug>] [priority:<0-4>] <title>` — <description>
   ```
 
@@ -56,31 +59,59 @@ Extract these sections from the report:
 
 ## Idempotency
 
-Before creating anything, search for an existing epic:
+Before creating anything, compute the epic title as:
 
-```bash
-gh issue list --repo <owner/repo> --search 'in:title "AI Readiness" label:ai-readiness:epic' --state all --json number,title,url,state
+```text
+AI Readiness: <owner/repo>
 ```
 
+Then search for an existing epic:
+
+```bash
+gh issue list --repo <owner/repo> --search 'in:title "AI Readiness: <owner/repo>"' --state all --json number,title,url,state
+```
+
+- If more than one candidate matches, prefer the one whose body
+  contains the exact marker line "_Tracked by the ai-ready-tickets
+  skill._" and stop with an actionable error if the match is still
+  ambiguous.
 - If an open epic exists → update it in place (edit body, add any
-  missing sub-tickets, do not recreate existing ones matched by
-  title).
+  missing sub-tickets, and refresh dependencies without recreating
+  existing ones).
 - If a closed epic exists → ask the user whether to reopen or create a
   new one. Do not silently reopen.
 - If none exists → create a new epic.
 
-For sub-tickets, match by exact title within the epic's task list
-before creating. Never create a second ticket with the same title.
+For sub-tickets, match by exact title among issues that already point
+back to the epic via `**Parent epic:** #<epic-num>` in the body or
+already block the epic via issue dependencies. Never create a second
+ticket with the same title for the same epic.
 
-## Labels
+## Dependencies
 
-Ensure these labels exist (create with `gh label create ... --force`
-if missing):
+Do not create or rely on labels for epic tracking. Use GitHub issue
+dependencies as the source of truth for the epic/sub-ticket
+relationship.
 
-- `ai-readiness:epic` — on the epic.
-- `ai-readiness` — on every sub-ticket.
-- `type:feature`, `type:task`, `type:bug` — per ticket.
-- `priority:0`..`priority:4` — per ticket.
+Use the epic as the blocked issue and each follow-up ticket as a
+blocking issue. In other words, the epic should be "blocked by" every
+open follow-up ticket.
+
+Use these REST calls through `gh api`:
+
+```bash
+gh api repos/<owner>/<repo>/issues/<epic-num>/dependencies/blocked_by
+gh api --method POST \
+  repos/<owner>/<repo>/issues/<epic-num>/dependencies/blocked_by \
+  -f issue_id=<sub-ticket-id>
+```
+
+- Fetch the existing `blocked_by` list before the loop and keep it
+  updated as tickets are created or matched.
+- Only add a dependency when the sub-ticket's numeric `id` is not
+  already present in the epic's dependency list.
+- Keep `type` and `priority` as metadata in the issue body and epic
+  checklist, not as labels.
 
 ## Epic body
 
@@ -93,6 +124,7 @@ Use this template. Fill the task list after sub-tickets are created
 **Score:** X/100 · **Verdict:** <verdict>
 **Report:** <path or link to report, if in repo>
 **Generated:** <ISO date>
+**Relationship model:** GitHub issue dependencies (`blocked by`)
 
 ## Scores
 
@@ -119,8 +151,9 @@ Use this template. Fill the task list after sub-tickets are created
 
 ---
 
-_Tracked by the `ai-ready-tickets` skill. Re-run the skill to refresh
-this epic; it will not create duplicate sub-tickets._
+_Tracked by the `ai-ready-tickets` skill._
+_Re-run the skill to refresh this epic; it will not create duplicate
+sub-tickets and will restore missing dependencies._
 ```
 
 ## Sub-ticket body
@@ -130,6 +163,8 @@ this epic; it will not create duplicate sub-tickets._
 
 ---
 
+**Type:** <feature|task|bug>
+**Priority:** <0-4>
 **Parent epic:** #<epic-num>
 **Source:** AI Readiness Report (<date>)
 **Category:** <if inferable from the report context, else omit>
@@ -137,24 +172,34 @@ this epic; it will not create duplicate sub-tickets._
 
 ## Execution
 
-1. Resolve report path and target repo. Print:
-   `Repo: <owner/repo> · Report: <path> · <N> follow-up items`.
-2. Ensure labels exist.
-3. Find or create the epic (empty task list for now). Capture its
-   number.
+1. Resolve report path and target repo. Compute the epic title
+   `AI Readiness: <owner/repo>`. Print:
+   `Repo: <owner/repo> · Report: <path> · Epic: <title> · <N> follow-up items`.
+2. Find or create the epic (empty task list for now). Capture its
+   `number` and numeric `id`.
+3. Read the epic's current `blocked_by` dependency list and task list.
 4. For each follow-up item, in report order:
    - Compute canonical title: strip surrounding backticks/brackets;
      keep the human title text only.
    - If a sub-ticket with that title already exists in the repo and is
-     linked to this epic, skip and record its number.
-   - Otherwise create it with `gh issue create --title <title> --body
-     <body> --label ai-readiness,type:<t>,priority:<p>`. Record the
-     returned number.
+     already linked to this epic, reuse it and record its `number` and
+     `id`.
+   - Otherwise create it with:
+
+     ```bash
+     gh issue create --title "<title>" --body "<body>"
+     ```
+
+     Record the returned `number`, then fetch the issue's numeric `id`
+     with `gh issue view`.
+   - Ensure the epic depends on the sub-ticket with `gh api --method
+     POST .../dependencies/blocked_by -f issue_id=<sub-ticket-id>`.
+     Skip the POST if that dependency already exists.
 5. Edit the epic body so the task list references every sub-ticket in
    report order with `- [ ] #<num> <title> — type:<t> priority:<p>`.
 6. Print a summary table:
 
-   ```
+   ```text
    | # | Title | Type | Priority | URL |
    ```
 
@@ -181,9 +226,14 @@ or run the `ai-ready` skill first.
   repo watcher. Always print the planned epic and ticket list and
   require user confirmation before the first `gh issue create`, unless
   the user already said "go" / "create them" in this turn.
+- Treat dependency writes the same way: show the intended blocked-by
+  relationships before the first `gh api --method POST` call unless
+  the user already approved creation in this turn.
 - Never close, delete, or reassign existing issues.
-- If the `gh` call fails mid-loop, stop and print which tickets were
-  created so the user can re-run (idempotency will skip them).
+- If a `gh issue create`, `gh issue edit`, or dependency `gh api` call
+  fails mid-loop, stop and print which tickets and dependencies were
+  created so the user can re-run (idempotency will skip or repair
+  them).
 
 ## Output
 

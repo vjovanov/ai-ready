@@ -43,6 +43,7 @@ ai-ready/
 ├── justfile                          # Task runner: check, lint, links, fmt.
 ├── .editorconfig                     # Cross-editor defaults.
 ├── .markdownlint.yaml                # Markdown lint rules.
+├── .pre-commit-config.yaml           # Optional local hooks for repo checks.
 ├── .prettierrc                       # Markdown formatting rules.
 ├── .aiexclude                        # Generic AI ignore.
 ├── .claudeignore                     # Claude-specific AI ignore.
@@ -53,6 +54,7 @@ ai-ready/
 │   └── workflows/check.yml           # Lint, link-check, anchor consistency.
 ├── docs/
 │   ├── SPECIFICATION.md              # This file.
+│   ├── LOCAL_TOOLING.md              # Toolchain bootstrap and verification.
 │   ├── AI_DEVELOPER_ONBOARDING.md    # How developers should use agents.
 │   ├── EXERCISES.md                  # Hands-on practice.
 │   ├── QUIZ.md                       # Self-check questions.
@@ -77,6 +79,8 @@ ai-ready/
   for concrete filenames rather than inlining them.
 - [AI_DEVELOPER_ONBOARDING.md](AI_DEVELOPER_ONBOARDING.md) covers the
   human side: how developers should adopt and use agents.
+  [LOCAL_TOOLING.md](LOCAL_TOOLING.md) is the concrete setup path for
+  the repo's required local CLI tools.
   [EXERCISES.md](EXERCISES.md) and [QUIZ.md](QUIZ.md) are its companions.
 
 This layering is the progressive-disclosure pattern the rubric itself

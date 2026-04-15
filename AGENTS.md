@@ -15,6 +15,7 @@ file. When in doubt about what "good" looks like here, run the
 - [docs/AI_DEVELOPER_ONBOARDING.md](docs/AI_DEVELOPER_ONBOARDING.md) — how to get real results from AI agents.
 - [docs/EXERCISES.md](docs/EXERCISES.md) — nine hands-on drills, easiest first.
 - [docs/QUIZ.md](docs/QUIZ.md) — 30-question self-assessment.
+- [docs/LOCAL_TOOLING.md](docs/LOCAL_TOOLING.md) — required local tools and install commands.
 
 ## Reference
 
@@ -48,8 +49,10 @@ file. When in doubt about what "good" looks like here, run the
 ## Running checks locally
 
 ```bash
+just doctor   # verify local tools before running repo checks
 just check    # lint, format-check, links, anchors — same as CI
 just fmt      # apply prettier to markdown
+just install-hooks   # wire up pre-commit after installing it
 just self-score   # invoke the ai-ready skill from your agent on this repo
 ```
 

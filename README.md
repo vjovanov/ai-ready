@@ -27,6 +27,10 @@ flowchart LR
 Run the skills from any compatible agent (Claude Code, Codex,
 OpenCode, Pi).
 
+Before running repo checks locally, install the documented toolchain in
+[docs/LOCAL_TOOLING.md](docs/LOCAL_TOOLING.md) and verify it with
+`just doctor`.
+
 ### 1. Score
 
 ```text
@@ -75,32 +79,32 @@ well. A three-step track:
 
 For humans:
 
-| Path | Purpose |
-| ---- | ------- |
-| [docs/SPECIFICATION.md](docs/SPECIFICATION.md) | Purpose, scope, architecture diagram. |
-| [skills/ai-ready/SKILL.md](skills/ai-ready/SKILL.md) | The 9-category scoring rubric. |
-| [skills/ai-ready-tickets/SKILL.md](skills/ai-ready-tickets/SKILL.md) | Report → GitHub issues. |
-| [docs/AI_DEVELOPER_ONBOARDING.md](docs/AI_DEVELOPER_ONBOARDING.md) | How developers should use agents. |
-| [docs/EXERCISES.md](docs/EXERCISES.md) | Nine hands-on drills. |
-| [docs/QUIZ.md](docs/QUIZ.md) | 30-question self-check. |
-| [docs/adr/](docs/adr/) | Architecture Decision Records. |
+| Path                                                                 | Purpose                               |
+| -------------------------------------------------------------------- | ------------------------------------- |
+| [docs/SPECIFICATION.md](docs/SPECIFICATION.md)                       | Purpose, scope, architecture diagram. |
+| [skills/ai-ready/SKILL.md](skills/ai-ready/SKILL.md)                 | The 9-category scoring rubric.        |
+| [skills/ai-ready-tickets/SKILL.md](skills/ai-ready-tickets/SKILL.md) | Report → GitHub issues.               |
+| [docs/AI_DEVELOPER_ONBOARDING.md](docs/AI_DEVELOPER_ONBOARDING.md)   | How developers should use agents.     |
+| [docs/EXERCISES.md](docs/EXERCISES.md)                               | Nine hands-on drills.                 |
+| [docs/QUIZ.md](docs/QUIZ.md)                                         | 30-question self-check.               |
+| [docs/adr/](docs/adr/)                                               | Architecture Decision Records.        |
 
 For agents: [AGENTS.md](AGENTS.md) (and its `CLAUDE.md` alias) is the
 machine-readable entry point. Humans don't need to read it.
 
 ## The rubric at a glance
 
-| # | Category | Why it matters |
-| - | -------- | -------------- |
-| 1 | Project context | Agents can't work without an AGENTS.md-style map. |
-| 2 | Spec & architecture | Progressive disclosure beats hunting through code. |
-| 3 | AI tool config | Skills, hooks, MCP — the agent's standard library. |
-| 4 | DevOps integration | Can the agent actually open a PR? |
-| 5 | Dev environment | Reproducibility prevents "works on my box" |
-| 6 | Type safety | Static checks catch what tests don't. |
-| 7 | Test infra | Agents need fast, reliable signal. |
-| 8 | Modularity | Small files load into context. |
-| 9 | Documentation | Non-obvious logic needs a written trail. |
+| #   | Category            | Why it matters                                     |
+| --- | ------------------- | -------------------------------------------------- |
+| 1   | Project context     | Agents can't work without an AGENTS.md-style map.  |
+| 2   | Spec & architecture | Progressive disclosure beats hunting through code. |
+| 3   | AI tool config      | Skills, hooks, MCP — the agent's standard library. |
+| 4   | DevOps integration  | Can the agent actually open a PR?                  |
+| 5   | Dev environment     | Reproducibility prevents "works on my box"         |
+| 6   | Type safety         | Static checks catch what tests don't.              |
+| 7   | Test infra          | Agents need fast, reliable signal.                 |
+| 8   | Modularity          | Small files load into context.                     |
+| 9   | Documentation       | Non-obvious logic needs a written trail.           |
 
 Each category scores 0–3. Total is `round(sum / 27 × 100)`.
 

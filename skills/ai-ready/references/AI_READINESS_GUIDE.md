@@ -202,6 +202,12 @@ without a human manually copying changes upstream. This is necessary because
 otherwise every completed task stalls at the point where collaboration begins.
 PR/MR automation is the bridge from local coding to team workflow.
 
+Score this based on whether the agent can reach the PR/MR system and use its
+capabilities, not on whether the current branch already has an open review
+object. A command like `gh pr view` can return "no pull requests found for
+branch" on a healthy repo with working auth; that is a branch-state fact, not
+evidence that PR automation is unavailable.
+
 ### 4.2 Code review workflow
 
 Reading review comments, requesting reviewers, and responding to feedback are
@@ -209,6 +215,10 @@ what let an agent stay inside the review loop. This is necessary because most
 real changes are not done at first draft; they evolve through reviewer input.
 If the agent cannot participate there, a human has to translate every review
 comment back into local work.
+
+When verifying this signal, prefer commands or docs that prove review access
+paths exist. The absence of active review comments on the current change is
+not a readiness failure by itself.
 
 ### 4.3 Issue tracking workflow
 

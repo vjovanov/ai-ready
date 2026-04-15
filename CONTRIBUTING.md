@@ -29,12 +29,14 @@ Conventional Commits. The type set in use:
 - `test:` — lint, link-check, or anchor-consistency changes
 
 Subject in imperative mood, under ~70 chars. Body optional; explain
-*why*, not *what*.
+_why_, not _what_.
 
 ## Pull request checklist
 
 Before requesting review:
 
+- [ ] `just doctor` passes (or you used the equivalent setup from
+      [docs/LOCAL_TOOLING.md](docs/LOCAL_TOOLING.md)).
 - [ ] `just check` is green locally (or you explain why it isn't).
 - [ ] If you touched [SKILL.md](skills/ai-ready/SKILL.md), every new
       rubric item resolves to an anchor in

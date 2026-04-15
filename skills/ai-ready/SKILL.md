@@ -67,6 +67,7 @@ Each signal links to its explanation in the readiness guide. For
 ecosystem-specific filenames, see `AGENT_REFERENCES.md`.
 
 ### 1. Project context for AI agents
+
 - [ ] [1.1](references/AI_READINESS_GUIDE.md#11-agent-instruction-files) Agent instruction files are present (`AGENTS.md`, `CLAUDE.md`, `SYSTEM.md`, or nested variants)
 - [ ] [1.2](references/AI_READINESS_GUIDE.md#12-entry-point-instruction-file-links-to-specification) The main instruction file links to architecture or spec docs
 - [ ] [1.3](references/AI_READINESS_GUIDE.md#13-ai-ignore-files) AI ignore files exclude secrets, assets, or build dirs
@@ -74,6 +75,7 @@ ecosystem-specific filenames, see `AGENT_REFERENCES.md`.
 - [ ] [1.5](references/AI_READINESS_GUIDE.md#15-build-and-run-docs) Build and run docs are clear and easy to follow
 
 ### 2. Specification and architecture
+
 - [ ] [2.1](references/AI_READINESS_GUIDE.md#21-architecture-docs-exist) Architecture docs exist
 - [ ] [2.2](references/AI_READINESS_GUIDE.md#22-progressive-disclosure) Progressive disclosure: high-level overview links to detailed component docs. The same rule applies to `AGENTS.md` / `CLAUDE.md` — they must stay concise and link out to detail rather than inline it.
 - [ ] [2.3](references/AI_READINESS_GUIDE.md#23-diagrams-present) Diagrams are present
@@ -81,12 +83,14 @@ ecosystem-specific filenames, see `AGENT_REFERENCES.md`.
 - [ ] [2.5](references/AI_READINESS_GUIDE.md#25-design-decisions-recorded) Design decisions are recorded with rationale
 
 ### 3. AI tool configuration
+
 - [ ] [3.1](references/AI_READINESS_GUIDE.md#31-mcp-servers) MCP server configuration is present (optional — prefer shell commands and skills when they cover the same capability)
 - [ ] [3.2](references/AI_READINESS_GUIDE.md#32-custom-commands-and-skills) Custom commands, skills, or tool definitions
 - [ ] [3.3](references/AI_READINESS_GUIDE.md#33-hooks-and-guardrails) Hooks, sandbox settings, or approval policies
 - [ ] [3.4](references/AI_READINESS_GUIDE.md#34-ide-ai-config) Repo-checked workspace AI settings for standardized IDEs (e.g., `.vscode/settings.json`, `.idea/`, `.claude/settings.json`, `opencode.json`, `.codex/config.toml`)
 
 ### 4. DevOps and workflow integration
+
 - [ ] [4.1](references/AI_READINESS_GUIDE.md#41-pull--merge-request-automation) PRs/MRs: can the agent create, update, and comment on pull/merge requests?
 - [ ] [4.2](references/AI_READINESS_GUIDE.md#42-code-review-workflow) Code review: can the agent request reviewers, read review comments, and post responses?
 - [ ] [4.3](references/AI_READINESS_GUIDE.md#43-issue-tracking-workflow) Issues: can the agent create, read, update, assign, and close issues?
@@ -94,6 +98,7 @@ ecosystem-specific filenames, see `AGENT_REFERENCES.md`.
 - [ ] [4.5](references/AI_READINESS_GUIDE.md#45-tooling-availability-and-auth) Required tooling and access paths are available
 
 ### 5. Dev environment reproducibility
+
 - [ ] [5.1](references/AI_READINESS_GUIDE.md#51-dev-container-definition) Dev container definition
 - [ ] [5.2](references/AI_READINESS_GUIDE.md#52-containerized-runtime) Containerized runtime definition
 - [ ] [5.3](references/AI_READINESS_GUIDE.md#53-nix-environment) Nix environment definition
@@ -103,6 +108,7 @@ ecosystem-specific filenames, see `AGENT_REFERENCES.md`.
 - [ ] [5.7](references/AI_READINESS_GUIDE.md#57-task-runner) Task runner
 
 ### 6. Type safety and static analysis
+
 - [ ] [6.1](references/AI_READINESS_GUIDE.md#61-type-checking) Type checking is configured
 - [ ] [6.2](references/AI_READINESS_GUIDE.md#62-linting) Linting is configured
 - [ ] [6.3](references/AI_READINESS_GUIDE.md#63-formatting) Formatting is configured
@@ -110,6 +116,7 @@ ecosystem-specific filenames, see `AGENT_REFERENCES.md`.
 - [ ] [6.5](references/AI_READINESS_GUIDE.md#65-pre-commit-hooks) Pre-commit hooks
 
 ### 7. Test infrastructure
+
 - [ ] [7.1](references/AI_READINESS_GUIDE.md#71-organized-test-files) Test files exist and are organized
 - [ ] [7.2](references/AI_READINESS_GUIDE.md#72-test-runner-documentation) Test runner configured and documented
 - [ ] [7.3](references/AI_READINESS_GUIDE.md#73-mocking-and-isolation) Mocking / isolation for external dependencies
@@ -119,11 +126,13 @@ ecosystem-specific filenames, see `AGENT_REFERENCES.md`.
 - [ ] [7.7](references/AI_READINESS_GUIDE.md#77-visual-testing) Visual testing for UI components
 
 ### 8. Code modularity and structure
+
 - [ ] [8.1](references/AI_READINESS_GUIDE.md#81-file-size) File size: most files under 300–500 lines
 - [ ] [8.2](references/AI_READINESS_GUIDE.md#82-separation-of-concerns) Separation of concerns: business logic separated from UI and data
 - [ ] [8.3](references/AI_READINESS_GUIDE.md#83-predictable-naming) Predictable naming across variables, functions, files
 
 ### 9. Documentation quality
+
 - [ ] [9.1](references/AI_READINESS_GUIDE.md#91-non-obvious-inline-comments) Inline comments where logic is non-obvious
 - [ ] [9.2](references/AI_READINESS_GUIDE.md#92-api-docs) API docs or generated docs
 - [ ] [9.3](references/AI_READINESS_GUIDE.md#93-changelog-or-conventional-commits) Changelog or conventional commits
@@ -132,7 +141,7 @@ ecosystem-specific filenames, see `AGENT_REFERENCES.md`.
 
 ## Output format
 
-```
+```text
 # AI Readiness Report: <repo-name>
 
 **Score:** X/100
@@ -191,5 +200,11 @@ ecosystem-specific filenames, see `AGENT_REFERENCES.md`.
 
 - Keep validation and test logs minimal in the main response.
 - On failure, show a simple error message with the failed command or artifact.
+- For DevOps checks, distinguish missing access from missing current
+  artifacts. Example: `gh pr view` on `main` may report "no pull
+  requests found for branch" even when PR infrastructure and auth work
+  correctly. Treat that as neutral evidence and prefer access checks
+  like `gh repo view`, `gh issue list`, `gh run list`, or an explicit
+  PR identifier when one exists.
 - Progressive discovery: highest-level conclusion first, more detail only where relevant (a note, weakness, or improvement).
 - Do not paste raw test output unless the user explicitly asks.

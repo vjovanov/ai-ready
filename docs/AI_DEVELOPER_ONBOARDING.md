@@ -37,12 +37,12 @@ workflow below into a waiting game.
 
 ### Minimum hardware
 
-| Component | Target | Why |
-| --- | --- | --- |
-| Disk | 2 TB NVMe | Multiple worktrees, container images, build artifacts, model caches. Running out of disk mid-build is a top disruptor. |
-| RAM | 32 GB (64 preferred) | Agents, containers, builds, tests, IDE all compete. 16 GB swaps the moment two things run. |
-| CPU | 16+ cores | Parallel builds and agents don't wait politely. Three agents × one build each = serialized on low core counts. |
-| Cooling | No throttling | Sustained load throttles laptops. Use a cooling pad/dock; desktops need airflow. |
+| Component | Target               | Why                                                                                                                    |
+| --------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Disk      | 2 TB NVMe            | Multiple worktrees, container images, build artifacts, model caches. Running out of disk mid-build is a top disruptor. |
+| RAM       | 32 GB (64 preferred) | Agents, containers, builds, tests, IDE all compete. 16 GB swaps the moment two things run.                             |
+| CPU       | 16+ cores            | Parallel builds and agents don't wait politely. Three agents × one build each = serialized on low core counts.         |
+| Cooling   | No throttling        | Sustained load throttles laptops. Use a cooling pad/dock; desktops need airflow.                                       |
 
 **The fan test:** open three agents, kick off a build, and do real
 work. If your fans max out for more than 30 seconds or the machine
@@ -215,7 +215,7 @@ the agent mid-task, you needed Ask-iterate (2.3) or Plan-iterate (2.4).
 options.
 
 Discuss trade-offs, pick an approach, then execute. The conversation
-*is* the planning. Know when to stop iterating — three rounds without
+_is_ the planning. Know when to stop iterating — three rounds without
 progress means you need 2.4.
 
 ### 2.4 Plan, iterate, do
@@ -257,14 +257,14 @@ high. Stale or noisy memory degrades every future session.
 
 ### Choosing the right workflow
 
-| Complexity | Uncertainty | Workflow |
-| --- | --- | --- |
-| Low | Low | **Do** (2.2) |
-| Low | High | **Ask-iterate** (2.3) |
-| Any | — | **Explain** (2.1) first |
-| High | Low | **Orchestrate** (2.5) |
-| High | High | **Plan-iterate** (2.4) |
-| Sustained/team | Any | **Swarm + memory** (2.6) |
+| Complexity     | Uncertainty | Workflow                 |
+| -------------- | ----------- | ------------------------ |
+| Low            | Low         | **Do** (2.2)             |
+| Low            | High        | **Ask-iterate** (2.3)    |
+| Any            | —           | **Explain** (2.1) first  |
+| High           | Low         | **Orchestrate** (2.5)    |
+| High           | High        | **Plan-iterate** (2.4)   |
+| Sustained/team | Any         | **Swarm + memory** (2.6) |
 
 ## 3. Repo readiness — make the codebase agent-friendly
 
@@ -388,14 +388,14 @@ together explain the rubric and why each category matters.
 
 ## Common pitfalls
 
-| Pitfall                              | What goes wrong                                |
-| ------------------------------------ | ---------------------------------------------- |
-| "The agent will figure it out"       | It won't. Hidden rules stay hidden.            |
-| Tools installed but never explained  | The agent doesn't know when to use them.       |
-| MCPs without clear auth/permissions  | Silent failure; looks like a model mistake.    |
-| Skills that nobody maintains         | Workflows drift; skills produce wrong results. |
-| Docs present but flat/stale          | Summarization amplifies the mess.              |
-| "Be safe" without a safety model     | The agent can't follow rules it doesn't have.  |
+| Pitfall                             | What goes wrong                                |
+| ----------------------------------- | ---------------------------------------------- |
+| "The agent will figure it out"      | It won't. Hidden rules stay hidden.            |
+| Tools installed but never explained | The agent doesn't know when to use them.       |
+| MCPs without clear auth/permissions | Silent failure; looks like a model mistake.    |
+| Skills that nobody maintains        | Workflows drift; skills produce wrong results. |
+| Docs present but flat/stale         | Summarization amplifies the mess.              |
+| "Be safe" without a safety model    | The agent can't follow rules it doesn't have.  |
 
 ## Next steps
 
@@ -419,28 +419,33 @@ here if you're bootstrapping.
 # Agent instructions
 
 ## Build and test
-- Install:    `just install` (or direct equivalent)
-- Build:      `just build`
-- Test:       `just test`
-- Lint:       `just lint`
-- Format:     `just format`
+
+- Install: `just install` (or direct equivalent)
+- Build: `just build`
+- Test: `just test`
+- Lint: `just lint`
+- Format: `just format`
 
 ## Project structure
-- `src/`       — application code; see `docs/architecture.md`
-- `tests/`     — unit and integration tests
-- `scripts/`   — developer and CI scripts
+
+- `src/` — application code; see `docs/architecture.md`
+- `tests/` — unit and integration tests
+- `scripts/` — developer and CI scripts
 
 ## Conventions
+
 - New modules go in `src/<domain>/`, never in `src/utils/`.
 - All shell scripts use `#!/usr/bin/env bash` and `set -euo pipefail`.
 - Commits follow Conventional Commits; tests required with any
   behavior change.
 
 ## Boundaries
+
 - Do not modify files under `vendor/` or `generated/`.
 - Do not touch migrations once merged; write a new migration instead.
 
 ## Links
+
 - Architecture: `docs/architecture.md`
 - ADRs: `docs/adr/`
 - Contributing: `CONTRIBUTING.md`
@@ -502,17 +507,21 @@ ci: lint test
 One paragraph: what this system does and for whom.
 
 ## Components
+
 - **API** (`src/api/`) — HTTP surface, auth, routing.
 - **Core** (`src/core/`) — business logic; no I/O.
 - **Adapters** (`src/adapters/`) — DB, queue, external APIs.
 
 ## Data flow
+
 HTTP → API → Core → Adapters → external systems.
 
 ## Key decisions
+
 - See `docs/adr/` for rationale behind current choices.
 
 ## Invariants
+
 - Core has no external dependencies; always testable in isolation.
 - Adapters never import from API.
 ```
